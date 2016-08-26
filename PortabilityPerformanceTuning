@@ -1,0 +1,17 @@
+@Entity
+public class EntityDebitNoHdr implements Serializable {
+ @Id
+ @GeneratedValue(generator = “auto_increment”)
+ @GenericGenerator(name = “auto_increment”, strategy =
+“increment”)
+ @Column(name = “DB_NOTE_ID”)
+ private Long DB_NOTE_ID;
+}
+Equivalent mapping file:
+<hibernate-mapping default-access=”field”>
+   <class name=” EntityDebitNoHdr “>
+      <id type=” Long “ column=” DB_NOTE_ID “>
+ <generator class=”native”/>
+ </id>
+ </class>
+</hibernate-mapping>
