@@ -1,0 +1,35 @@
+List<EntityFeeReceipt> oList = session.createQuery(“from
+Fee_Rcpt b where b.number like ?”).setString(0, “FA_Clt1_%”).
+list();
+The code printing the Fee Receipt will create one SQL query
+per Fee Receipt to initialize the Invoice numbers. We get
+1+n queries in total i.e. one for the Fee Receipt and n for the
+invoice, if we have n invoices settled using that fee receipt.
+
+for (EntityReceipt oReceipt : Receipts) {
+ int totalLength = 0;
+
+ for (Invoice invoice: oReceipt.getInv_No()) { 
+ totalLength += (invoice.getContent() != null ? invoice.
+getContent().length() : 0);
+ }
+ log.info(“Length of all invoice: “ + totalLength);
+}
+
+Approach to improve: One way to perk up this is to define that
+Hibernate loads the chapters in batches. Here is the mapping:
+Annotations based:
+
+OneToMany(cascade = CascadeType.ALL)
+
+<br>JoinColumn(nullable = false)
+@BatchSize(size = 4)
+
+private Set<Invoice> invoices = new HashSet<Invoice>();
+
+
+XML based:
+<set name=“ Invoice” batch-size=“4”>
+ <key column=“ Inv_No”></key>
+ <one-to-many/>
+</set> 
