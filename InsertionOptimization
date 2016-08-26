@@ -1,0 +1,23 @@
+ @GeneratedValue(generator = “auto_increment”)
+ @GenericGenerator(name = “auto_increment”, strategy =
+“increment”)
+ @Column(name = “EXP_CD”)
+ private Long EXP_CD; 
+ 
+ We are using @ GenericGenerator and not the sequence generator in this case.
+ Strategy type used is ‘increment’. 
+ 
+ This generates Integer, long or short type of ids.
+
+
+This generator reads maximum present primary key in database
+table and then increments it by one and inserts new row with
+new id.
+
+
+Though the best id generators in Hibernate are enhancedtable
+and enhanced-sequence, coupled with an appropriate
+optimizer, such as hilo. For Instance, enhanced-table + hilo, inserts
+over 10,000 records per second, but multiple insertion at this scale
+is not a use case of application. So the data presented regarding
+insertion is using Increment type generic generator
