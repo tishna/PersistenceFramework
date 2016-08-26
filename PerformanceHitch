@@ -1,0 +1,38 @@
+The property tagged as use_sql_comments in the hibernate
+configuration file hibernate.cfg.xml adds a comment to apieceSQL
+clarifying why it was created. It helps you spot in a HQL statement
+if the lazy loading or a criteria query led to the statement.
+<property name=“use_sql_comments”>true</property>
+The property set as format_sql in hibernate.cfg.xml, adequately
+formats the SQL similar to the substitute of printing it on a single
+line.
+
+<property name=“format_sql”>true</property>
+
+
+There might be a lot of unexpected queriesleading to slowlness
+of a dialog. This can be triggered by eager loading of relations
+or just reuse the queries of another dialog. For instance 1:1
+and n:1 relations are loaded eagerly, if you use annotations
+whereas XML mappings are lazy by default. The approach,
+considered preeminent so far, to analyze the working in the wake of
+the scenario is ‘Debug-Configuration’. Two configuration settings
+are offered by Hibernate.
+The first one is a property in the hibernate.cfg.xml
+
+<property name=”show_sql” >true</property>
+
+If it is set to true, the SQLstatements will be printed to the console.
+This does not use any timestamp.
+ The second approach is normal logging. This offers timestamps
+and hence is better than previous approach
+
+
+#logs the SQL statements
+log4j.logger.org.hibernate.SQL=debug
+
+# Some more useful loggings
+# Logs SQL statements for id generation
+log4j.logger.org.hibernate.id=info
+
+# Logs the JDBC-Parameter which are passed to a query (very
